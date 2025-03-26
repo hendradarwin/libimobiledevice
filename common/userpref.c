@@ -34,14 +34,14 @@
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
-#include <dirent.h>
+#include "dirent.h"
 #ifndef _WIN32
 #include <pwd.h>
 #include <unistd.h>
 #include <libgen.h>
 #include <sys/stat.h>
 #endif
-#include <usbmuxd.h>
+#include <libusbmuxd/usbmuxd.h>
 #if defined(HAVE_OPENSSL)
 #include <openssl/bn.h>
 #include <openssl/pem.h>

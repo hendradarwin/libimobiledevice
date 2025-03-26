@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <getopt.h>
+#include "getopt.h"
 #include <libimobiledevice/libimobiledevice.h>
 #include <libimobiledevice/lockdown.h>
 
@@ -54,8 +54,6 @@ static void print_usage(int argc, char **argv, int is_error)
 		"  -h, --help      prints usage information\n"
 		"  -v, --version   prints version information\n"
 		"\n"
-		"Homepage:    <" PACKAGE_URL ">\n"
-		"Bug Reports: <" PACKAGE_BUGREPORT ">\n"
 	);
 }
 

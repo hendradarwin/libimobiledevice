@@ -50,6 +50,7 @@ typedef struct mobile_image_mounter_client_private mobile_image_mounter_client_p
 typedef mobile_image_mounter_client_private *mobile_image_mounter_client_t; /**< The client handle. */
 
 /** callback for image upload */
+typedef uint32_t ssize_t;
 typedef ssize_t (*mobile_image_mounter_upload_cb_t) (void* buffer, size_t length, void *user_data);
 
 /* Interface */
