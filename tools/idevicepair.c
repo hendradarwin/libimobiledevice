@@ -184,8 +184,7 @@ static void print_usage(int argc, char **argv, int is_error)
 #endif
 	fprintf(is_error ? stderr : stdout,
 		"\n"
-		"Homepage:    <" PACKAGE_URL ">\n"
-		"Bug Reports: <" PACKAGE_BUGREPORT ">\n"
+		
 	);
 }
 

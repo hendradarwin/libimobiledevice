@@ -39,7 +39,7 @@
 #include <netinet/in.h>
 #endif
 
-#include <libusbmuxd/usbmuxd.h>
+#include <usbmuxd.h>
 
 #if defined(HAVE_OPENSSL)
 #include <openssl/err.h>
@@ -947,7 +947,7 @@ idevice_error_t idevice_get_udid(idevice_t device, char **udid)
 }
 
 #if defined(HAVE_OPENSSL) || defined(HAVE_GNUTLS)
-typedef uint32_t ssize_t;
+// typedef uint32_t ssize_t; // windows only aneh
 typedef ssize_t ssl_cb_ret_type_t;
 #elif defined(HAVE_MBEDTLS)
 typedef int ssl_cb_ret_type_t;

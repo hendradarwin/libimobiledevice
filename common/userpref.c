@@ -41,7 +41,7 @@
 #include <libgen.h>
 #include <sys/stat.h>
 #endif
-#include <libusbmuxd/usbmuxd.h>
+#include <usbmuxd.h>
 #if defined(HAVE_OPENSSL)
 #include <openssl/bn.h>
 #include <openssl/pem.h>

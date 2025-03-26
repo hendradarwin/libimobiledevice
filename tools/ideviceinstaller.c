@@ -243,13 +243,16 @@ static void status_cb(plist_t command, plist_t status, void *unused)
 				instproxy_status_get_percent_complete(status, &percent);
 
 				if (last_status && (strcmp(last_status, status_name))) {
-					printf("\n");
+					// printf("\n");
 				}
 
 				if (percent >= 0) {
-					printf("\r%s: %s (%d%%)", command_name, status_name, percent);
+					//printf("\r%s: %s (%d%%)", command_name, status_name, percent);
+					printf("{\"message\": \"%s: %s\", \"progress\": %d}\n", command_name, status_name, percent);
+					
 				} else {
-					printf("\r%s: %s", command_name, status_name);
+					//printf("\r%s: %s", command_name, status_name);
+					printf("{\"message\": \"%s: %s\", \"progress\": 100}\n", command_name, status_name);
 				}
 				if (command_completed) {
 					printf("\n");
@@ -1337,7 +1340,9 @@ run_again:
 				goto leave_cleanup;
 			}
 
-			printf("Copying '%s' to device... ", cmdarg);
+
+			//printf("Copying '%s' to device... ", cmdarg);
+			printf("{\"message\": \"Copying '%s' to device... \", \"progress\": 0}\n", cmdarg);
 
 			if (afc_upload_file(afc, cmdarg, pkgname) < 0) {
 				printf("FAILED\n");
@@ -1345,7 +1350,8 @@ run_again:
 				goto leave_cleanup;
 			}
 
-			printf("DONE.\n");
+			//printf("DONE.\n");
+			printf("{\"message\": \"Copying '%s' to device... DONE\", \"progress\": 0}\n", cmdarg);
 
 			if (bundleidentifier) {
 				instproxy_client_options_add(client_opts, "CFBundleIdentifier", bundleidentifier, NULL);
@@ -1364,7 +1370,9 @@ run_again:
 
 		/* perform installation or upgrade */
 		if (cmd == CMD_INSTALL) {
-			printf("Installing '%s'\n", bundleidentifier);
+			//printf("Installing '%s'\n", bundleidentifier);
+			printf("{\"message\": \"Installing '%s'\", \"progress\": 0}\n", bundleidentifier);
+
 			instproxy_install(ipc, pkgname, client_opts, status_cb, NULL);
 		} else {
 			printf("Upgrading '%s'\n", bundleidentifier);

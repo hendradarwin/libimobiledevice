@@ -52,6 +52,8 @@ target_include_directories(imobiledevice
 target_compile_definitions(imobiledevice PUBLIC 
     PACKAGE_VERSION="2.6.0"
     HAVE_OPENSSL
+    HAVE_VASPRINTF
+    HAVE_ASPRINTF
 )
 
 target_link_libraries(imobiledevice PUBLIC 
@@ -59,10 +61,12 @@ target_link_libraries(imobiledevice PUBLIC
     libimobiledevice-glue::libimobiledevice-glue
     libusbmuxd::libusbmuxd
     openssl::openssl
-    ole32 
-    ws2_32 
-    gdi32 
-    Iphlpapi)
+)
+
+# ole32 
+# ws2_32 
+# gdi32 
+# Iphlpapi
 
 set_target_properties(imobiledevice PROPERTIES 
     PUBLIC_HEADER "${header_file_list}"
@@ -80,6 +84,28 @@ IF (WIN32)
 ENDIF()
 add_executable(idevice_id ${idevice_id_source})
 target_link_libraries(idevice_id PRIVATE imobiledevice)
+
+
+# Tools / CLI
+list(APPEND idevicepair_source    
+    tools/idevicepair.c
+)
+IF (WIN32)
+    list(APPEND idevicepair_source    
+        win32_port/getopt.c
+        win32_port/libgen.c
+    )
+ENDIF()
+add_executable(idevicepair
+    ${idevicepair_source}
+)
+
+target_link_libraries(idevicepair PRIVATE 
+    imobiledevice
+    libzip::zip
+)
+
+
 
 
 # Tools / CLI
