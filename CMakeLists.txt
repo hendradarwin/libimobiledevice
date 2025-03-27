@@ -39,7 +39,7 @@ IF (WIN32)
 ENDIF()
 
 
-add_library(imobiledevice SHARED ${libimobiledevice_source_files})
+add_library(imobiledevice STATIC ${libimobiledevice_source_files})
 
 target_include_directories(imobiledevice
     PUBLIC         
