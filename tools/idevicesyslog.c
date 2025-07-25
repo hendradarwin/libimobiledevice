@@ -500,8 +500,6 @@ static void print_usage(int argc, char **argv, int is_error)
 		"\n"
 		"For filter examples consult idevicesyslog(1) man page.\n"
 		"\n"
-		"Homepage:    <" PACKAGE_URL ">\n"
-		"Bug Reports: <" PACKAGE_BUGREPORT ">\n"
 	);
 }
 

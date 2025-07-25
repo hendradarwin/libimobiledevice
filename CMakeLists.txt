@@ -128,6 +128,20 @@ target_link_libraries(ideviceinstaller PRIVATE
 )
 
 
+# Tools / CLI
+list(APPEND idevicesyslog_source    
+    tools/idevicesyslog.c     
+)
+IF (WIN32)
+    list(APPEND idevicesyslog_source    
+        win32_port/getopt.c
+        win32_port/libgen.c
+    )
+ENDIF()
+add_executable(idevicesyslog ${idevicesyslog_source})
+target_link_libraries(idevicesyslog PRIVATE imobiledevice)
+
+
 install(
     TARGETS imobiledevice
     EXPORT plist_targets
