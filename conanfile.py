@@ -3,8 +3,10 @@ from conan.tools.layout import basic_layout
 from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps
 from conan.tools.files import copy
 from os.path import join
+from conan.tools.cmake import cmake_layout
 
-class libplistConan(ConanFile):
+
+class libimobiledeviceConan(ConanFile):
     name = "libimobiledevice"
     version = "2.1.0"
     package_type = "library"
@@ -32,14 +34,14 @@ class libplistConan(ConanFile):
             self.options.rm_safe("fPIC")
             
     def requirements(self):
-        self.requires("libplist/2.6.0")
+        self.requires("libplist/2.6.1")
         self.requires("libimobiledevice-glue/1.3.1")
         self.requires("libusbmuxd/2.1.0")
         self.requires("openssl/3.3.2")
         self.requires("libzip/1.11.3") # only for ideviceinstaller
 
     def layout(self):
-        basic_layout(self)
+        cmake_layout(self)
 
     def generate(self):
         tc = CMakeToolchain(self)

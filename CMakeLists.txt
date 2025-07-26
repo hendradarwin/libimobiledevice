@@ -49,11 +49,42 @@ target_include_directories(imobiledevice
         ${additional_include_dir}
 )
 
+
+set (compile_defs LIBIMOBILEDEVICE_STATIC) 
+set (link_libs "") 
+
+
+# default
+list(APPEND compile_defs
+    LIBPLIST_STATIC
+    LIBUSBMUXD_STATIC
+    LIMD_GLUE_STATIC    
+)
+
+
+if (APPLE)
+    list(APPEND compile_defs
+        HAVE_OPENSSL
+        HAVE_VASPRINTF
+        HAVE_ASPRINTF
+    )
+elseif(WIN32)
+    list(APPEND compile_defs
+        HAVE_OPENSSL
+    )
+
+    list(APPEND link_libs
+        ole32 
+        ws2_32 
+        gdi32 
+        Iphlpapi    
+    )    
+endif()
+
+
 target_compile_definitions(imobiledevice PUBLIC 
     PACKAGE_VERSION="2.6.0"
-    HAVE_OPENSSL
-    HAVE_VASPRINTF
-    HAVE_ASPRINTF
+    ${compile_defs}
 )
 
 target_link_libraries(imobiledevice PUBLIC 
@@ -61,12 +92,10 @@ target_link_libraries(imobiledevice PUBLIC
     libimobiledevice-glue::libimobiledevice-glue
     libusbmuxd::libusbmuxd
     openssl::openssl
+    ${link_libs}
 )
 
-# ole32 
-# ws2_32 
-# gdi32 
-# Iphlpapi
+
 
 set_target_properties(imobiledevice PROPERTIES 
     PUBLIC_HEADER "${header_file_list}"
@@ -86,60 +115,71 @@ add_executable(idevice_id ${idevice_id_source})
 target_link_libraries(idevice_id PRIVATE imobiledevice)
 
 
-# Tools / CLI
-list(APPEND idevicepair_source    
-    tools/idevicepair.c
-)
-IF (WIN32)
-    list(APPEND idevicepair_source    
-        win32_port/getopt.c
-        win32_port/libgen.c
-    )
-ENDIF()
-add_executable(idevicepair
-    ${idevicepair_source}
-)
+# # Tools / CLI
+# list(APPEND idevicepair_source    
+#     tools/idevicepair.c
+# )
+# IF (WIN32)
+#     list(APPEND idevicepair_source    
+#         win32_port/getopt.c
+#         win32_port/libgen.c
+#     )
+# ENDIF()
+# add_executable(idevicepair
+#     ${idevicepair_source}
+# )
 
-target_link_libraries(idevicepair PRIVATE 
-    imobiledevice
-    libzip::zip
-)
+# target_link_libraries(idevicepair PRIVATE 
+#     imobiledevice
+#     libzip::zip
+#     libplist::libplist
+#     libimobiledevice-glue::libimobiledevice-glue
+#     libusbmuxd::libusbmuxd
+#     openssl::openssl
 
-
-
-
-# Tools / CLI
-list(APPEND ideviceinstaller_source    
-    tools/ideviceinstaller.c 
-)
-IF (WIN32)
-    list(APPEND ideviceinstaller_source    
-        win32_port/getopt.c
-        win32_port/libgen.c
-    )
-ENDIF()
-add_executable(ideviceinstaller 
-    ${ideviceinstaller_source}
-)
-
-target_link_libraries(ideviceinstaller PRIVATE 
-    imobiledevice
-    libzip::zip
-)
+# )
 
 
-# Tools / CLI
-list(APPEND idevicesyslog_source    
-    tools/idevicesyslog.c     
-)
-IF (WIN32)
-    list(APPEND idevicesyslog_source    
-        win32_port/getopt.c
-        win32_port/libgen.c
-    )
-ENDIF()
-add_executable(idevicesyslog ${idevicesyslog_source})
-target_link_libraries(idevicesyslog PRIVATE imobiledevice)
+
+
+# # Tools / CLI
+# list(APPEND ideviceinstaller_source    
+#     tools/ideviceinstaller.c 
+# )
+# IF (WIN32)
+#     list(APPEND ideviceinstaller_source    
+#         win32_port/getopt.c
+#         win32_port/libgen.c
+#     )
+# ENDIF()
+# add_executable(ideviceinstaller 
+#     ${ideviceinstaller_source}
+# )
+
+# target_link_libraries(ideviceinstaller PRIVATE 
+#     imobiledevice
+#     libzip::zip
+# )
+
+
+# # Tools / CLI
+# list(APPEND idevicesyslog_source    
+#     tools/idevicesyslog.c     
+# )
+# IF (WIN32)
+#     list(APPEND idevicesyslog_source    
+#         win32_port/getopt.c
+#         win32_port/libgen.c
+#     )
+# ENDIF()
+# add_executable(idevicesyslog ${idevicesyslog_source})
+# target_link_libraries(idevicesyslog PUBLIC 
+#     imobiledevice
+#     # libplist::libplist
+#     # libimobiledevice-glue::libimobiledevice-glue
+#     # libusbmuxd::libusbmuxd
+#     # openssl::openssl
+#     )
 
 
 install(
