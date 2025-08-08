@@ -22,7 +22,7 @@ class libimobiledeviceConan(ConanFile):
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    default_options = {"shared": True, "fPIC": True}
 
 
     def config_options(self):
@@ -34,7 +34,7 @@ class libimobiledeviceConan(ConanFile):
             self.options.rm_safe("fPIC")
             
     def requirements(self):
-        self.requires("libplist/2.6.1")
+        self.requires("libplist/2.6.0")
         self.requires("libimobiledevice-glue/1.3.1")
         self.requires("libusbmuxd/2.1.0")
         self.requires("openssl/3.3.2")

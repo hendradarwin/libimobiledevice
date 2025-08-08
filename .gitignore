@@ -43,3 +43,4 @@ cython/.libs/*
 cython/*.c
 doxygen.cfg
 build-release/
+build

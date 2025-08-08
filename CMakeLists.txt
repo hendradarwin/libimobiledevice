@@ -39,7 +39,7 @@ IF (WIN32)
 ENDIF()
 
 
-add_library(imobiledevice STATIC ${libimobiledevice_source_files})
+add_library(imobiledevice SHARED ${libimobiledevice_source_files})
 
 target_include_directories(imobiledevice
     PUBLIC         
@@ -50,16 +50,16 @@ target_include_directories(imobiledevice
 )
 
 
-set (compile_defs LIBIMOBILEDEVICE_STATIC) 
+# set (compile_defs LIBIMOBILEDEVICE_STATIC) 
 set (link_libs "") 
 
 
 # default
-list(APPEND compile_defs
-    LIBPLIST_STATIC
-    LIBUSBMUXD_STATIC
-    LIMD_GLUE_STATIC    
-)
+# list(APPEND compile_defs
+#     LIBPLIST_STATIC
+#     LIBUSBMUXD_STATIC
+#     LIMD_GLUE_STATIC    
+# )
 
 
 if (APPLE)
@@ -71,6 +71,7 @@ if (APPLE)
 elseif(WIN32)
     list(APPEND compile_defs
         HAVE_OPENSSL
+        LIBIMOBILEDEVICE_API_BUILD_SHARED_LIBRARY
     )
 
     list(APPEND link_libs
@@ -186,8 +187,8 @@ install(
     TARGETS imobiledevice
     EXPORT plist_targets
     PUBLIC_HEADER DESTINATION "include/libusbmuxd"
-    RUNTIME DESTINATION "bin/x64/$<$<PLATFORM_ID:Windows>:windows>$<$<PLATFORM_ID:Linux>:linux>$<$<CONFIG:Debug,DebugASan,DebugTSan>:/debug>"
-    ARCHIVE DESTINATION "lib/x64/$<$<PLATFORM_ID:Windows>:windows>$<$<PLATFORM_ID:Linux>:linux>$<$<CONFIG:Debug,DebugASan,DebugTSan>:/debug>"
-    LIBRARY DESTINATION "lib/x64/$<$<PLATFORM_ID:Windows>:windows>$<$<PLATFORM_ID:Linux>:linux>$<$<CONFIG:Debug,DebugASan,DebugTSan>:/debug>"
+    RUNTIME DESTINATION "bin"
+    ARCHIVE DESTINATION "lib"
+    LIBRARY DESTINATION "lib"
 )
 
